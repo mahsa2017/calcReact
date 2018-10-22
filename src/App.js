@@ -1,27 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+// import logo from './logo.svg';
+import "./App.css";
+import Buttons from "./components/Buttons.jsx";
+import Historyboard from "./components/Historyboard.jsx";
 
 class App extends Component {
+  state = {
+    result: undefined
+  };
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <Historyboard history={window.localStorage}/>
+
+        <Buttons calculate={this.calculate} result={this.state.result} clearResult={this.clearResult} />
       </div>
     );
+  }
+  calculate = (exp) => {
+    let date = Date.now();
+    window.localStorage.setItem(`expression${date}`, exp);
+    window.localStorage.getItem(`expression1`);
+    const newResult = eval(exp);
+    console.log(newResult);
+     this.setState({
+       result:newResult
+     })
+  }
+  clearResult = () =>{
+    this.setState({
+      result:undefined
+    })
   }
 }
 
